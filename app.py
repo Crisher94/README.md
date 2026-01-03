@@ -5,7 +5,16 @@ import streamlit as st
 # Título de la aplicación
 st.header('Análisis de Anuncios de Vehículos')
 
-car_data = pd.read_csv('../vehicles_us.csv')
+car_data = pd.read_csv('vehicles_us.csv')
+
+# Limpieza de datos
+car_data['is_4wd'] = car_data['is_4wd'].fillna(0)
+car_data['model_year'] = car_data['model_year'].fillna(car_data['model_year'].median())
+car_data['odometer'] = car_data['odometer'].fillna(car_data['odometer'].median())
+car_data['paint_color'] = car_data['paint_color'].fillna('unknown')
+
+st.write(f"Data loaded and cleaned. Shape: {car_data.shape}")
+st.write(car_data[['odometer', 'price']].head())
 
 # --- SECCIÓN DE HISTOGRAMA ---
 st.write('### Visualización de Inventario')
